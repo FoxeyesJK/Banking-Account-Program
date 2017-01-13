@@ -31,7 +31,7 @@ public class Login {
 	Connection connection=null;
 	private JTextField textFieldUN;
 	private JPasswordField textpasswordfield;
-	
+	//connecting data
 	/**
 	 * Create the application.
 	 */
@@ -40,7 +40,7 @@ public class Login {
 		connection=sqliteConnection.dbConnector();
 		
 	}
-//sex
+
 	/**
 	 * Initialize the contents of the frame.
 	 */

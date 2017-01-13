@@ -23,7 +23,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class EmployeeInfo extends JFrame {
-
+//Second_page modification 
 	private JPanel contentPane;
 	private JTable table;
 	private JComboBox comboBoxName;
@@ -63,7 +63,6 @@ public class EmployeeInfo extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void fillComboBox()
