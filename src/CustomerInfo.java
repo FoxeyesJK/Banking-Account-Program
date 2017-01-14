@@ -20,11 +20,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Component;
 
-public class EmployeeInfo extends JFrame {
-//Second_page modification 
+public class CustomerInfo extends JFrame {
+	//Second_page modification 
 	private JPanel contentPane;
 	private JTable table;
-	private JComboBox comboBoxName;
 
 	/**
 	 * Launch the application.
@@ -33,7 +32,7 @@ public class EmployeeInfo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EmployeeInfo frame = new EmployeeInfo();
+					CustomerInfo frame = new CustomerInfo();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,15 +44,22 @@ public class EmployeeInfo extends JFrame {
 	private JTextField textFieldEID;
 	private JTextField textFieldName;
 	private JTextField textFieldSurname;
-	private JTextField textFieldAge;
 	private JList listName;
 	private JTextField textFieldSearch;
 	private JComboBox comboBoxSelect;
+	private JTextField textFieldUsername;
+	private final Action action_1 = new SwingAction();
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
 
 	public void refreshTable()
 	{
 		try {
-			String query="select EID,Name,Surname,Age from EmployeeInfo";
+			String query="select EID,Name,Surname,UserName,Password,DOB,Email,Mobile,Address from CustomerInfo";
 			PreparedStatement pst=connection.prepareStatement(query);
 			ResultSet rs=pst.executeQuery();
 			table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -66,14 +72,14 @@ public class EmployeeInfo extends JFrame {
 	public void fillComboBox()
 	{
 		try {
-			String query="select * from EmployeeInfo";
+			String query="select * from CustomerInfo";
 			PreparedStatement pst=connection.prepareStatement(query);
 			ResultSet rs=pst.executeQuery();
 			
-			while(rs.next())
+			/*while(rs.next())
 			{
 				comboBoxName.addItem(rs.getString("Name"));
-			}
+			}*/
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,7 +90,7 @@ public class EmployeeInfo extends JFrame {
 	public void loadList()
 	{
 		try {
-			String query="select * from EmployeeInfo";
+			String query="select * from CustomerInfo";
 			PreparedStatement pst=connection.prepareStatement(query);
 			ResultSet rs=pst.executeQuery();
 			
@@ -105,7 +111,7 @@ public class EmployeeInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EmployeeInfo() {
+	public CustomerInfo() {
 		connection=sqliteConnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
@@ -115,12 +121,12 @@ public class EmployeeInfo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Table");
+		JButton btnNewButton = new JButton("Refresh");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					String query="select EID,Name,Surname,Age from EmployeeInfo";
+					String query="select EID,Name,Surname,UserName,Password,DOB,Email,Mobile,Address from CustomerInfo";
 					// * instead age,name show everything
 					PreparedStatement pst=connection.prepareStatement(query);
 					ResultSet rs=pst.executeQuery();
@@ -131,11 +137,11 @@ public class EmployeeInfo extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(167, 420, 97, 23);
+		btnNewButton.setBounds(30, 121, 97, 23);
 		contentPane.add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(393, 236, 347, 186);
+		scrollPane.setBounds(30, 154, 578, 376);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -146,7 +152,7 @@ public class EmployeeInfo extends JFrame {
 					int row = table.getSelectedRow();
 					String EID_=(table.getModel().getValueAt(row, 0)).toString();
 					
-					String query="select * from EmployeeInfo where EID='"+EID_+"' ";
+					String query="select * from CustomerInfo where EID='"+EID_+"' ";
 					PreparedStatement pst=connection.prepareStatement(query);
 		
 					ResultSet rs=pst.executeQuery();
@@ -156,7 +162,6 @@ public class EmployeeInfo extends JFrame {
 						textFieldEID.setText(rs.getString("EID"));
 						textFieldName.setText(rs.getString("Name"));
 						textFieldSurname.setText(rs.getString("Surname"));
-						textFieldAge.setText(rs.getString("Age"));
 						
 					}
 					
@@ -171,34 +176,34 @@ public class EmployeeInfo extends JFrame {
 		
 		JLabel lblEd = new JLabel("EID");
 		lblEd.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblEd.setBounds(167, 213, 57, 23);
+		lblEd.setBounds(647, 171, 57, 23);
 		contentPane.add(lblEd);
 		
 		JLabel lblNewLabel = new JLabel("Name");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(167, 238, 57, 23);
+		lblNewLabel.setBounds(647, 193, 57, 23);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblSurname = new JLabel("Surname");
 		lblSurname.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblSurname.setBounds(167, 263, 80, 23);
+		lblSurname.setBounds(647, 216, 80, 23);
 		contentPane.add(lblSurname);
 		
-		JLabel lblAge = new JLabel("Age");
-		lblAge.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblAge.setBounds(167, 288, 57, 23);
-		contentPane.add(lblAge);
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblUsername.setBounds(647, 239, 80, 23);
+		contentPane.add(lblUsername);
+		
 		
 		JButton btnNewButton_1 = new JButton("Save");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					String query="insert into EmployeeInfo (EID,Name,Surname,Age) values (?,?,?,?)";
+					String query="insert into CustomerInfo (EID,Name,Surname,UserName,Password,DOB,Email,Mobile,Address) values (?,?,?,?,?,?,?,?,?)";
 					PreparedStatement pst=connection.prepareStatement(query);
 					pst.setString(1, textFieldEID.getText() );
 					pst.setString(2, textFieldName.getText() );
 					pst.setString(3, textFieldSurname.getText() );
-					pst.setString(4, textFieldAge.getText() );
 					
 					pst.execute();
 					
@@ -214,35 +219,36 @@ public class EmployeeInfo extends JFrame {
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton_1.setBounds(167, 321, 97, 23);
+		btnNewButton_1.setBounds(701, 411, 97, 23);
 		contentPane.add(btnNewButton_1);
 		
 		textFieldEID = new JTextField();
-		textFieldEID.setBounds(252, 215, 116, 21);
+		textFieldEID.setBounds(734, 171, 116, 21);
 		contentPane.add(textFieldEID);
 		textFieldEID.setColumns(10);
 		
 		textFieldName = new JTextField();
-		textFieldName.setBounds(252, 240, 116, 21);
+		textFieldName.setBounds(734, 195, 116, 21);
 		contentPane.add(textFieldName);
 		textFieldName.setColumns(10);
 		
 		textFieldSurname = new JTextField();
-		textFieldSurname.setBounds(252, 265, 116, 21);
+		textFieldSurname.setBounds(734, 218, 116, 21);
 		contentPane.add(textFieldSurname);
 		textFieldSurname.setColumns(10);
 		
-		textFieldAge = new JTextField();
-		textFieldAge.setBounds(252, 290, 116, 21);
-		contentPane.add(textFieldAge);
-		textFieldAge.setColumns(10);
+		textFieldUsername = new JTextField();
+		textFieldUsername.setColumns(10);
+		textFieldUsername.setBounds(734, 241, 116, 21);
+		contentPane.add(textFieldUsername);
 		
-		JButton btnUpdate = new JButton("Update");
+		
+		JButton btnUpdate = new JButton("Modify");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try{
-				String query="Update EmployeeInfo set EID='"+textFieldEID.getText()+"'  ,name='"+textFieldName.getText()+"'    ,surname='"+textFieldSurname.getText()+"'  , age='"+textFieldAge.getText()+"' where EID='"+textFieldEID.getText()+"'   ";
+				String query="Update CustomerInfo set EID='"+textFieldEID.getText()+"'  ,name='"+textFieldName.getText()+"'    ,surname='"+textFieldSurname.getText()+"'  where EID='"+textFieldEID.getText()+"'   ";
 				PreparedStatement pst=connection.prepareStatement(query);
 				
 				pst.execute();
@@ -258,7 +264,7 @@ public class EmployeeInfo extends JFrame {
 			}
 		});
 		btnUpdate.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnUpdate.setBounds(167, 354, 97, 23);
+		btnUpdate.setBounds(701, 444, 97, 23);
 		contentPane.add(btnUpdate);
 		
 		JButton btnDelete = new JButton("Delete");
@@ -267,7 +273,7 @@ public class EmployeeInfo extends JFrame {
 				int action=JOptionPane.showConfirmDialog(null, "Do you really Want To Delete","Delete",JOptionPane.YES_NO_OPTION);
 				if(action==0){
 				try{
-					String query="delete from EmployeeInfo where EID='"+textFieldEID.getText()+"' ";
+					String query="delete from CustomerInfo where EID='"+textFieldEID.getText()+"' ";
 					PreparedStatement pst=connection.prepareStatement(query);
 					
 					pst.execute();
@@ -284,37 +290,8 @@ public class EmployeeInfo extends JFrame {
 			}
 		});
 		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnDelete.setBounds(167, 387, 97, 23);
+		btnDelete.setBounds(701, 477, 97, 23);
 		contentPane.add(btnDelete);
-		
-		comboBoxName = new JComboBox();
-		comboBoxName.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try{
-					String query="select * from EmployeeInfo where name=? ";
-					PreparedStatement pst=connection.prepareStatement(query);
-					pst.setString(1,  (String) comboBoxName.getSelectedItem());
-					ResultSet rs=pst.executeQuery();
-					
-					while(rs.next())
-					{
-						textFieldEID.setText(rs.getString("EID"));
-						textFieldName.setText(rs.getString("Name"));
-						textFieldSurname.setText(rs.getString("Surname"));
-						textFieldAge.setText(rs.getString("Age"));
-						
-					}
-					
-					pst.close();
-					}catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-			}
-		});
-		comboBoxName.setFont(new Font("Tahoma", Font.BOLD, 18));
-		comboBoxName.setBounds(167, 182, 116, 21);
-		contentPane.add(comboBoxName);
 		
 		listName = new JList();
 		listName.setBounds(276, 321, 92, 135);
@@ -326,7 +303,7 @@ public class EmployeeInfo extends JFrame {
 			public void keyReleased(KeyEvent arg0) {
 				try{
 					String selection=(String)comboBoxSelect.getSelectedItem();
-					String query="select * from EmployeeInfo where "+selection+"=? ";
+					String query="select * from CustomerInfo where "+selection+"=? ";
 					System.out.println(query);
 					PreparedStatement pst=connection.prepareStatement(query);
 					pst.setString(1,textFieldSearch.getText());
@@ -341,14 +318,14 @@ public class EmployeeInfo extends JFrame {
 					}
 			}
 		});
-		textFieldSearch.setBounds(544, 184, 146, 42);
+		textFieldSearch.setBounds(503, 122, 105, 23);
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
 		
 		comboBoxSelect = new JComboBox();
-		comboBoxSelect.setModel(new DefaultComboBoxModel(new String[] {"EID", "Name", "Surname", "Age"}));
+		comboBoxSelect.setModel(new DefaultComboBoxModel(new String[] {"EID", "Name", "Surname","Username","Email","Mobile"}));
 		comboBoxSelect.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBoxSelect.setBounds(393, 184, 139, 21);
+		comboBoxSelect.setBounds(394, 122, 97, 21);
 		contentPane.add(comboBoxSelect);
 		
 		JLabel labelLogo = new JLabel("");
@@ -411,16 +388,74 @@ public class EmployeeInfo extends JFrame {
 		mnCustomerCenter.setBackground(new Color(135, 206, 250));
 		menuBar_1.add(mnCustomerCenter);
 		
-		JMenu mnAboutUs = new JMenu("           About Us");
-		mnAboutUs.setPreferredSize(new Dimension(225, 22));
-		mnAboutUs.setHorizontalTextPosition(SwingConstants.LEADING);
-		mnAboutUs.setForeground(Color.WHITE);
-		mnAboutUs.setFont(new Font("Tahoma", Font.BOLD, 16));
-		mnAboutUs.setBackground(new Color(135, 206, 250));
-		menuBar_1.add(mnAboutUs);
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblPassword.setBounds(647, 264, 80, 23);
+		contentPane.add(lblPassword);
+		
+		JLabel lblDob = new JLabel("DOB");
+		lblDob.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblDob.setBounds(647, 286, 57, 23);
+		contentPane.add(lblDob);
+		
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblEmail.setBounds(647, 309, 80, 23);
+		contentPane.add(lblEmail);
+		
+		JLabel lblMobile = new JLabel("Mobile");
+		lblMobile.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblMobile.setBounds(647, 332, 80, 23);
+		contentPane.add(lblMobile);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(734, 264, 116, 21);
+		contentPane.add(textField);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(734, 287, 116, 21);
+		contentPane.add(textField_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(734, 311, 116, 21);
+		contentPane.add(textField_2);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(734, 334, 116, 21);
+		contentPane.add(textField_3);
+		
+		JLabel lblAddress = new JLabel("Address");
+		lblAddress.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblAddress.setBounds(647, 355, 80, 23);
+		contentPane.add(lblAddress);
+		
+		JLabel lblBalance = new JLabel("Balance");
+		lblBalance.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblBalance.setBounds(647, 378, 80, 23);
+		contentPane.add(lblBalance);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(734, 380, 116, 21);
+		contentPane.add(textField_4);
+		
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBounds(734, 357, 116, 21);
+		contentPane.add(textField_5);
+		
+		JLabel lblAccount = new JLabel("Account Info Change");
+		lblAccount.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblAccount.setBounds(671, 132, 166, 23);
+		contentPane.add(lblAccount);
 		
 		refreshTable();
 		fillComboBox();
 		loadList();
 	}
+	
 }

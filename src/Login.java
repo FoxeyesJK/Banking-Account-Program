@@ -38,7 +38,6 @@ public class Login {
 	public Login() {
 		initialize();
 		connection=sqliteConnection.dbConnector();
-		
 	}
 
 	/**
@@ -48,7 +47,7 @@ public class Login {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.getContentPane().setForeground(Color.WHITE);
-		frame.setBounds(100, 100, 923, 460);
+		frame.setBounds(100, 100, 900, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -78,7 +77,7 @@ public class Login {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{ 
-					String query= "select * from EmployeeInfo where username=? and password=?  ";
+					String query= "select * from CustomerInfo where username=? and password=?  ";
 					//pass the query can be either upper or lowercase
 					PreparedStatement pst=connection.prepareStatement(query);
 					pst.setString(1, textFieldUN.getText() );
@@ -94,7 +93,7 @@ public class Login {
 						JOptionPane.showMessageDialog(null, "Username and password is correct");
 						//second Jframe
 						frame.dispose();
-						EmployeeInfo emplInfo=new EmployeeInfo();
+						CustomerInfo emplInfo=new CustomerInfo();
 						emplInfo.setVisible(true);
 					}else if(count>1)
 					{
@@ -125,7 +124,7 @@ public class Login {
 		Image img1 = new ImageIcon(this.getClass().getResource("/JKBANK LOGO.png")).getImage();
 		label.setIcon(new ImageIcon(img1));
 		
-		label.setBounds(98, 10, 149, 62);
+		label.setBounds(96, 39, 149, 62);
 		frame.getContentPane().add(label);
 		
 		JLabel lblSignIn = new JLabel("Sign in");
@@ -137,7 +136,7 @@ public class Login {
 		JLabel labelCover = new JLabel("");
 		Image img2 = new ImageIcon(this.getClass().getResource("/Cover2.jpg")).getImage();
 		labelCover.setIcon(new ImageIcon(img2));
-		labelCover.setBounds(30, 70, 857, 331);
+		labelCover.setBounds(12, 112, 907, 331);
 		frame.getContentPane().add(labelCover);
 	}
 }
