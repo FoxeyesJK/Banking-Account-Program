@@ -48,7 +48,6 @@ public class CustomerInfo extends JFrame {
 	private JTextField textFieldSearch;
 	private JComboBox comboBoxSelect;
 	private JTextField textFieldUsername;
-	private final Action action_1 = new SwingAction();
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -334,60 +333,6 @@ public class CustomerInfo extends JFrame {
 		labelLogo.setBounds(375, 10, 139, 61);
 		contentPane.add(labelLogo);
 		
-		JMenuBar menuBar_1 = new JMenuBar();
-		menuBar_1.setForeground(Color.WHITE);
-		menuBar_1.setBackground(new Color(135, 206, 250));
-		menuBar_1.setBounds(0, 69, 884, 42);
-		contentPane.add(menuBar_1);
-		
-		JMenu mnPersonal = new JMenu("              Account Manage");
-		mnPersonal.setHorizontalTextPosition(SwingConstants.LEADING);
-		mnPersonal.setPreferredSize(new Dimension(225, 22));
-		mnPersonal.setForeground(Color.WHITE);
-		mnPersonal.setBackground(new Color(135, 206, 250));
-		mnPersonal.setFont(new Font("Tahoma", Font.BOLD, 16));
-		menuBar_1.add(mnPersonal);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("                        My Account");
-		mntmNewMenuItem.setBackground(new Color(135, 206, 250));
-		mntmNewMenuItem.setForeground(Color.WHITE);
-		mntmNewMenuItem.setPreferredSize(new Dimension(218, 22));
-		mnPersonal.add(mntmNewMenuItem);
-		
-		JSeparator separator = new JSeparator();
-		mnPersonal.add(separator);
-		
-		JMenuItem mntmPaymenttransfer = new JMenuItem("                   Payment/Transfer");
-		mntmPaymenttransfer.setPreferredSize(new Dimension(218, 22));
-		mntmPaymenttransfer.setForeground(Color.WHITE);
-		mntmPaymenttransfer.setBackground(new Color(135, 206, 250));
-		mnPersonal.add(mntmPaymenttransfer);
-		
-		JSeparator separator_1 = new JSeparator();
-		mnPersonal.add(separator_1);
-		
-		JMenuItem mntmSetting = new JMenuItem("                            Setting");
-		mntmSetting.setPreferredSize(new Dimension(218, 22));
-		mntmSetting.setBackground(new Color(135, 206, 250));
-		mntmSetting.setForeground(Color.WHITE);
-		mnPersonal.add(mntmSetting);
-		
-		JMenu mnCorporate = new JMenu("              Balance Manage");
-		mnCorporate.setPreferredSize(new Dimension(225, 22));
-		mnCorporate.setHorizontalTextPosition(SwingConstants.LEADING);
-		mnCorporate.setForeground(Color.WHITE);
-		mnCorporate.setFont(new Font("Tahoma", Font.BOLD, 16));
-		mnCorporate.setBackground(new Color(135, 206, 250));
-		menuBar_1.add(mnCorporate);
-		
-		JMenu mnCustomerCenter = new JMenu("       Empolyee Manage");
-		mnCustomerCenter.setPreferredSize(new Dimension(225, 22));
-		mnCustomerCenter.setHorizontalTextPosition(SwingConstants.LEADING);
-		mnCustomerCenter.setForeground(Color.WHITE);
-		mnCustomerCenter.setFont(new Font("Tahoma", Font.BOLD, 16));
-		mnCustomerCenter.setBackground(new Color(135, 206, 250));
-		menuBar_1.add(mnCustomerCenter);
-		
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblPassword.setBounds(647, 264, 80, 23);
@@ -452,6 +397,58 @@ public class CustomerInfo extends JFrame {
 		lblAccount.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblAccount.setBounds(671, 132, 166, 23);
 		contentPane.add(lblAccount);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("      Customer Account");
+		mntmNewMenuItem.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					
+					CustomerInfo emplInfo=new CustomerInfo();
+					emplInfo.setVisible(true);
+				}catch(Exception e)
+				{
+					JOptionPane.showMessageDialog(null, e);
+				}
+			}
+		});
+		
+		mntmNewMenuItem.setBackground(new Color(135, 206, 235));
+		mntmNewMenuItem.setBounds(0, 71, 221, 41);
+		contentPane.add(mntmNewMenuItem);
+		
+		JMenuItem mntmCustomerBalance = new JMenuItem("      Customer Balance");
+		mntmCustomerBalance.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					
+					CustomerBalance CusBal=new CustomerBalance();
+					CusBal.setVisible(true);
+				}catch(Exception e)
+				{
+					JOptionPane.showMessageDialog(null, e);
+				}
+			}
+		});
+		mntmCustomerBalance.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mntmCustomerBalance.setForeground(new Color(0, 0, 0));
+		mntmCustomerBalance.setBackground(new Color(135, 206, 235));
+		mntmCustomerBalance.setBounds(222, 71, 221, 41);
+		contentPane.add(mntmCustomerBalance);
+		
+		JMenuItem menuItem = new JMenuItem("      Customer Balance");
+		menuItem.setFont(new Font("Tahoma", Font.BOLD, 16));
+		menuItem.setForeground(Color.BLACK);
+		menuItem.setBackground(new Color(135, 206, 235));
+		menuItem.setBounds(444, 71, 221, 41);
+		contentPane.add(menuItem);
+		
+		JMenuItem menuItem_1 = new JMenuItem("      Customer Balance");
+		menuItem_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+		menuItem_1.setForeground(Color.BLACK);
+		menuItem_1.setBackground(new Color(135, 206, 235));
+		menuItem_1.setBounds(666, 71, 221, 41);
+		contentPane.add(menuItem_1);
 		
 		refreshTable();
 		fillComboBox();
