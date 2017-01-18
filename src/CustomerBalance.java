@@ -415,6 +415,7 @@ public class CustomerBalance extends JFrame {
 				
 				CustomerInfo emplInfo=new CustomerInfo();
 				emplInfo.setVisible(true);
+				dispose();
 			}catch(Exception e)
 			{
 				JOptionPane.showMessageDialog(null, e);
@@ -426,18 +427,6 @@ public class CustomerBalance extends JFrame {
 	contentPane.add(mntmNewMenuItem);
 	
 	JMenuItem mntmCustomerBalance = new JMenuItem("      Customer Balance");
-	mntmCustomerBalance.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent arg0) {
-			try{
-				
-				CustomerBalance CusBal=new CustomerBalance();
-				CusBal.setVisible(true);
-			}catch(Exception e)
-			{
-				JOptionPane.showMessageDialog(null, e);
-			}
-		}
-	});
 	mntmCustomerBalance.setFont(new Font("Tahoma", Font.BOLD, 16));
 	mntmCustomerBalance.setForeground(new Color(0, 0, 0));
 	mntmCustomerBalance.setBackground(new Color(135, 206, 235));

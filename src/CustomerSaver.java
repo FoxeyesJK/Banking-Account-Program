@@ -1,8 +1,11 @@
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class CustomerSaver extends JInternalFrame {
+	private JTextField textFieldName;
 		
 	
 	/**
@@ -26,6 +29,16 @@ public class CustomerSaver extends JInternalFrame {
 	 */
 	public CustomerSaver() {
 		setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(null);
+		
+		JLabel lblName = new JLabel("Name:");
+		lblName.setBounds(94, 46, 57, 15);
+		getContentPane().add(lblName);
+		
+		textFieldName = new JTextField();
+		textFieldName.setBounds(163, 43, 211, 18);
+		getContentPane().add(textFieldName);
+		textFieldName.setColumns(10);
 
 	}
 }

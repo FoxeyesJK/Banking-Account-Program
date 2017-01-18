@@ -399,20 +399,7 @@ public class CustomerInfo extends JFrame {
 		contentPane.add(lblAccount);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("      Customer Account");
-		mntmNewMenuItem.setFont(new Font("Tahoma", Font.BOLD, 16));
-		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try{
-					
-					CustomerInfo emplInfo=new CustomerInfo();
-					emplInfo.setVisible(true);
-				}catch(Exception e)
-				{
-					JOptionPane.showMessageDialog(null, e);
-				}
-			}
-		});
-		
+		mntmNewMenuItem.setFont(new Font("Tahoma", Font.BOLD, 16));	
 		mntmNewMenuItem.setBackground(new Color(135, 206, 235));
 		mntmNewMenuItem.setBounds(0, 71, 221, 41);
 		contentPane.add(mntmNewMenuItem);
@@ -424,6 +411,7 @@ public class CustomerInfo extends JFrame {
 					
 					CustomerBalance CusBal=new CustomerBalance();
 					CusBal.setVisible(true);
+					
 				}catch(Exception e)
 				{
 					JOptionPane.showMessageDialog(null, e);
