@@ -93,8 +93,8 @@ public class Login {
 						JOptionPane.showMessageDialog(null, "Username and password is correct");
 						//second Jframe
 						frame.dispose();
-						CustomerInfo emplInfo=new CustomerInfo();
-						emplInfo.setVisible(true);
+						NewBankFrame newframe=new NewBankFrame();
+						newframe.setVisible(true);
 					}else if(count>1)
 					{
 						JOptionPane.showMessageDialog(null, "Duplicate Username and password");

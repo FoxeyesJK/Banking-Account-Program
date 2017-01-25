@@ -205,7 +205,6 @@ public class CustomerBalance extends JFrame {
 				pst.setString(1, textFieldEID.getText() );
 				pst.setString(2, textFieldName.getText() );
 				pst.setString(3, textFieldSurname.getText() );
-				
 				pst.execute();
 				
 				JOptionPane.showMessageDialog(null, "Data Saved");
@@ -306,7 +305,7 @@ public class CustomerBalance extends JFrame {
 			try{
 				String selection=(String)comboBoxSelect.getSelectedItem();
 				String query="select * from CustomerInfo where "+selection+"=? ";
-				System.out.println(query);
+				//System.out.println(query);
 				PreparedStatement pst=connection.prepareStatement(query);
 				pst.setString(1,textFieldSearch.getText());
 				ResultSet rs=pst.executeQuery();

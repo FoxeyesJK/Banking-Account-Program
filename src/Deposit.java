@@ -1,9 +1,11 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -16,6 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.border.BevelBorder;
 
 public class Deposit extends JDialog {
@@ -28,6 +32,7 @@ public class Deposit extends JDialog {
 	private JTextField textField_5;
 	private JTextField textField_7;
 	private JTextField textField_2;
+	private final JLabel lblCover = new JLabel("");
 	/**
 	 * Launch the application.
 	 */
@@ -200,6 +205,11 @@ public class Deposit extends JDialog {
 			});
 			btnNewButton_1.setBounds(261, 10, 90, 23);
 			panel.add(btnNewButton_1);
+		
 		}
+		Image img2 = new ImageIcon(this.getClass().getResource("/Cover3.jpg")).getImage();
+		lblCover.setIcon(new ImageIcon(img2));
+		lblCover.setBounds(0, 0, 653, 63);
+		contentPanel.add(lblCover);
 	}
 }
