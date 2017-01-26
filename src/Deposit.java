@@ -3,6 +3,9 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -17,6 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+
+import net.proteanit.sql.DbUtils;
+
 import java.awt.Font;
 import java.awt.Image;
 
@@ -26,13 +32,15 @@ public class Deposit extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
-	private JTextField textField;
-	private JTextField textField_1;
+	Connection connection=null;
+	private JTextField textFieldFirstName;
+	private JTextField textFieldAcntNum1;
 	private JTextField textField_4;
 	private JTextField textField_5;
-	private JTextField textField_7;
-	private JTextField textField_2;
+	private JTextField textFieldBalance;
+	private JTextField textFieldAcntNum;
 	private final JLabel lblCover = new JLabel("");
+	private JTextField textFieldLastName;
 	/**
 	 * Launch the application.
 	 */
@@ -50,6 +58,7 @@ public class Deposit extends JDialog {
 	 * Create the dialog.
 	 */
 	public Deposit() {
+		connection=sqliteConnection.dbConnector();
 		setBounds(100, 100, 669, 515);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
@@ -71,22 +80,24 @@ public class Deposit extends JDialog {
 			contentPanel.add(panel);
 			panel.setLayout(null);
 			{
-				JLabel lblName = new JLabel("Name :");
-				lblName.setBounds(156, 168, 57, 15);
-				panel.add(lblName);
-				lblName.setHorizontalAlignment(SwingConstants.RIGHT);
+				JLabel lblFirstName = new JLabel("First Name :");
+				lblFirstName.setBounds(138, 168, 75, 15);
+				panel.add(lblFirstName);
+				lblFirstName.setHorizontalAlignment(SwingConstants.RIGHT);
 			}
 			{
-				textField = new JTextField();
-				textField.setBounds(225, 166, 243, 18);
-				panel.add(textField);
-				textField.setColumns(10);
+				textFieldFirstName = new JTextField();
+				textFieldFirstName.setBackground(Color.LIGHT_GRAY);
+				textFieldFirstName.setBounds(225, 166, 75, 18);
+				panel.add(textFieldFirstName);
+				textFieldFirstName.setColumns(10);
 			}
 			{
-				textField_1 = new JTextField();
-				textField_1.setBounds(225, 194, 243, 18);
-				panel.add(textField_1);
-				textField_1.setColumns(10);
+				textFieldAcntNum1 = new JTextField();
+				textFieldAcntNum1.setBackground(Color.LIGHT_GRAY);
+				textFieldAcntNum1.setBounds(225, 194, 243, 18);
+				panel.add(textFieldAcntNum1);
+				textFieldAcntNum1.setColumns(10);
 			}
 			{
 				JLabel lblAccountNum = new JLabel("Account Number :");
@@ -101,10 +112,11 @@ public class Deposit extends JDialog {
 				lblPrevBal.setHorizontalAlignment(SwingConstants.RIGHT);
 			}
 			{
-				textField_7 = new JTextField();
-				textField_7.setBounds(225, 222, 243, 18);
-				panel.add(textField_7);
-				textField_7.setColumns(10);
+				textFieldBalance = new JTextField();
+				textFieldBalance.setBackground(Color.LIGHT_GRAY);
+				textFieldBalance.setBounds(225, 222, 243, 18);
+				panel.add(textFieldBalance);
+				textFieldBalance.setColumns(10);
 			}
 			{
 				JLabel lblAmtDeposit = new JLabel("Amount Deposited :");
@@ -135,6 +147,18 @@ public class Deposit extends JDialog {
 			panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 			panel_1.setBounds(0, 144, 631, 173);
 			panel.add(panel_1);
+			panel_1.setLayout(null);
+			
+			JLabel lblLastName = new JLabel("Last Name :");
+			lblLastName.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblLastName.setBounds(306, 23, 75, 15);
+			panel_1.add(lblLastName);
+			
+			textFieldLastName = new JTextField();
+			textFieldLastName.setBackground(Color.LIGHT_GRAY);
+			textFieldLastName.setColumns(10);
+			textFieldLastName.setBounds(393, 21, 75, 18);
+			panel_1.add(textFieldLastName);
 			
 			JPanel panel_2 = new JPanel();
 			panel_2.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -147,12 +171,35 @@ public class Deposit extends JDialog {
 			lblAccountNumber.setBounds(12, 24, 134, 15);
 			panel_2.add(lblAccountNumber);
 			
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(158, 22, 243, 18);
-			panel_2.add(textField_2);
+			textFieldAcntNum = new JTextField();
+			textFieldAcntNum.setColumns(10);
+			textFieldAcntNum.setBounds(158, 22, 243, 18);
+			panel_2.add(textFieldAcntNum);
 			
 			JButton btnCheck = new JButton("Check");
+			btnCheck.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try{
+						String query="select * from CustomerInfo where AccountNumber=? ";
+						PreparedStatement pst=connection.prepareStatement(query);
+						pst.setString(1, textFieldAcntNum.getText());
+						ResultSet rs=pst.executeQuery();
+						
+						while(rs.next())
+						{
+							textFieldFirstName.setText(rs.getString("Name"));
+							textFieldLastName.setText(rs.getString("Surname"));
+							textFieldAcntNum1.setText(rs.getString("AccountNumber"));
+							textFieldBalance.setText(rs.getString("Balance"));
+						}
+						pst.close();
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					
+				}
+			});
+		
 			btnCheck.setBounds(158, 50, 90, 25);
 			panel_2.add(btnCheck);
 			

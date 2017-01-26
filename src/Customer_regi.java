@@ -35,7 +35,7 @@ public class Customer_regi extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldLastName;
 	private JTextField textFieldAdd;
-	private JTextField textFieldEid;
+	private JTextField textFieldAccountNumber;
 	private JTextField textFieldUserName;
 	private JTextField textFieldPassword;
 	private final JLabel lblCover = new JLabel("");
@@ -188,16 +188,16 @@ public class Customer_regi extends JDialog {
 				comboBoxYear.setModel(new DefaultComboBoxModel(new String[] {"Year", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017"}));
 			}
 			{
-				JLabel lblEID = new JLabel("Account #:");
-				lblEID.setBounds(22, 50, 91, 15);
-				panel.add(lblEID);
-				lblEID.setHorizontalAlignment(SwingConstants.RIGHT);
+				JLabel lblAccountNumber = new JLabel("Account #:");
+				lblAccountNumber.setBounds(22, 50, 91, 15);
+				panel.add(lblAccountNumber);
+				lblAccountNumber.setHorizontalAlignment(SwingConstants.RIGHT);
 			}
 			{
-				textFieldEid = new JTextField();
-				textFieldEid.setBounds(125, 47, 243, 18);
-				panel.add(textFieldEid);
-				textFieldEid.setColumns(10);
+				textFieldAccountNumber = new JTextField();
+				textFieldAccountNumber.setBounds(125, 47, 243, 18);
+				panel.add(textFieldAccountNumber);
+				textFieldAccountNumber.setColumns(10);
 			}
 			{
 				JLabel lblUsername = new JLabel("Username :");
@@ -287,9 +287,9 @@ public class Customer_regi extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						
 						try {
-							String query="insert into CustomerInfo (Eid,Name,Surname,UserName,Password,DOB,Email,Mobile,Address,Balance,AccountType,Sex) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+							String query="insert into CustomerInfo (AccountNumber,Name,Surname,UserName,Password,DOB,Email,Mobile,Address,Balance,AccountType,Sex) values (?,?,?,?,?,?,?,?,?,?,?,?)";
 							PreparedStatement pst=connection.prepareStatement(query);
-							pst.setString(1, textFieldEid.getText() );
+							pst.setString(1, textFieldAccountNumber.getText() );
 							pst.setString(2, textFieldFirstName.getText() );
 							pst.setString(3, textFieldLastName.getText() );
 							pst.setString(4, textFieldUserName.getText() );
@@ -341,7 +341,7 @@ public class Customer_regi extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					textFieldFirstName.setText("");
 					textFieldLastName.setText("");
-					textFieldEid.setText("");
+					textFieldAccountNumber.setText("");
 					textFieldUserName.setText("");
 					textFieldPassword.setText("");
 					textFieldEmail.setText("");
