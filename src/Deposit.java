@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
@@ -35,12 +36,14 @@ public class Deposit extends JDialog {
 	Connection connection=null;
 	private JTextField textFieldFirstName;
 	private JTextField textFieldAcntNum1;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField textFieldDeposited;
+	private JTextField textFieldAuthStaff;
 	private JTextField textFieldBalance;
 	private JTextField textFieldAcntNum;
 	private final JLabel lblCover = new JLabel("");
 	private JTextField textFieldLastName;
+	private double TempBalance;
+	private double TempDeposited;
 	/**
 	 * Launch the application.
 	 */
@@ -123,12 +126,13 @@ public class Deposit extends JDialog {
 				lblAmtDeposit.setBounds(89, 253, 124, 15);
 				panel.add(lblAmtDeposit);
 				lblAmtDeposit.setHorizontalAlignment(SwingConstants.RIGHT);
+				
 			}
 			{
-				textField_4 = new JTextField();
-				textField_4.setBounds(225, 250, 243, 18);
-				panel.add(textField_4);
-				textField_4.setColumns(10);
+				textFieldDeposited = new JTextField();
+				textFieldDeposited.setBounds(225, 250, 243, 18);
+				panel.add(textFieldDeposited);
+				textFieldDeposited.setColumns(10);
 			}
 			{
 				JLabel lblAuthID = new JLabel("Authorized Staff ID :");
@@ -137,10 +141,10 @@ public class Deposit extends JDialog {
 				lblAuthID.setHorizontalAlignment(SwingConstants.RIGHT);
 			}
 			{
-				textField_5 = new JTextField();
-				textField_5.setBounds(225, 275, 243, 18);
-				panel.add(textField_5);
-				textField_5.setColumns(10);
+				textFieldAuthStaff = new JTextField();
+				textFieldAuthStaff.setBounds(225, 275, 243, 18);
+				panel.add(textFieldAuthStaff);
+				textFieldAuthStaff.setColumns(10);
 			}
 			
 			JPanel panel_1 = new JPanel();
@@ -191,6 +195,8 @@ public class Deposit extends JDialog {
 							textFieldLastName.setText(rs.getString("Surname"));
 							textFieldAcntNum1.setText(rs.getString("AccountNumber"));
 							textFieldBalance.setText(rs.getString("Balance"));
+							TempBalance = rs.getDouble("Balance");
+							
 						}
 						pst.close();
 					}catch(Exception e){
@@ -232,12 +238,41 @@ public class Deposit extends JDialog {
 			panel.setLayout(null);
 			{
 				JButton btnDeposit = new JButton("Deposit");
+				btnDeposit.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							
+							TempDeposited = Double.parseDouble(textFieldDeposited.getText());
+							
+							TempBalance += TempDeposited;
+							System.out.println(TempDeposited);
+							System.out.println(TempBalance);
+							
+							
+						
+							String query="Update CustomerInfo set Balance='"+TempBalance+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   ";
+							PreparedStatement pst=connection.prepareStatement(query);
+							pst.execute();
+							JOptionPane.showMessageDialog(null, "Data Saved");
+								
+							pst.close();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}		
+						
+					}
+				});
 				btnDeposit.setActionCommand("OK");
 				btnDeposit.setBounds(159, 10, 90, 23);
 				panel.add(btnDeposit);
 			}
 			{
 				JButton button = new JButton("Cancel");
+				button.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				button.setActionCommand("Cancel");
 				button.setBounds(363, 10, 90, 23);
 				panel.add(button);
@@ -245,9 +280,14 @@ public class Deposit extends JDialog {
 			
 			JButton btnNewButton_1 = new JButton("Clear");
 			btnNewButton_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					
+				public void actionPerformed(ActionEvent arg0) {
+					textFieldAcntNum.setText("");
+					textFieldAcntNum1.setText("");
+					textFieldFirstName.setText("");
+					textFieldLastName.setText("");
+					textFieldBalance.setText("");
+					textFieldDeposited.setText("");
+					textFieldAuthStaff.setText("");
 				}
 			});
 			btnNewButton_1.setBounds(261, 10, 90, 23);

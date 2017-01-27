@@ -5,11 +5,15 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -22,13 +26,17 @@ public class Withdrawal extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_7;
-	private JTextField textField_2;
+	Connection connection=null;
+	private JTextField textFieldFirstName;
+	private JTextField textFieldAcntNum1;
+	private JTextField textFieldWithdraw;
+	private JTextField textFieldAuthStaff;
+	private JTextField textFieldBalance;
+	private JTextField textFieldAcntNum;
 	private final JLabel lblCover = new JLabel("");
+	private double TempBalance;
+	private double TempWithdraw;
+	private JTextField textFieldLastName;
 	/**
 	 * Launch the application.
 	 */
@@ -46,6 +54,7 @@ public class Withdrawal extends JDialog {
 	 * Create the dialog.
 	 */
 	public Withdrawal() {
+		connection=sqliteConnection.dbConnector();
 		setBounds(100, 100, 669, 515);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
@@ -67,23 +76,26 @@ public class Withdrawal extends JDialog {
 			contentPanel.add(panel);
 			panel.setLayout(null);
 			{
-				JLabel lblName = new JLabel("Name :");
-				lblName.setBounds(156, 168, 57, 15);
-				panel.add(lblName);
-				lblName.setHorizontalAlignment(SwingConstants.RIGHT);
+				JLabel lblFirstName = new JLabel("First Name :");
+				lblFirstName.setBounds(138, 168, 75, 15);
+				panel.add(lblFirstName);
+				lblFirstName.setHorizontalAlignment(SwingConstants.RIGHT);
 			}
 			{
-				textField = new JTextField();
-				textField.setBounds(225, 166, 243, 18);
-				panel.add(textField);
-				textField.setColumns(10);
+				textFieldFirstName = new JTextField();
+				textFieldFirstName.setBackground(Color.LIGHT_GRAY);
+				textFieldFirstName.setBounds(225, 166, 75, 18);
+				panel.add(textFieldFirstName);
+				textFieldFirstName.setColumns(10);
 			}
 			{
-				textField_1 = new JTextField();
-				textField_1.setBounds(225, 194, 243, 18);
-				panel.add(textField_1);
-				textField_1.setColumns(10);
+				textFieldAcntNum1 = new JTextField();
+				textFieldAcntNum1.setBackground(Color.LIGHT_GRAY);
+				textFieldAcntNum1.setBounds(225, 194, 243, 18);
+				panel.add(textFieldAcntNum1);
+				textFieldAcntNum1.setColumns(10);
 			}
+			
 			{
 				JLabel lblAccountNum = new JLabel("Account Number :");
 				lblAccountNum.setBounds(89, 196, 124, 15);
@@ -97,10 +109,11 @@ public class Withdrawal extends JDialog {
 				lblPrevBal.setHorizontalAlignment(SwingConstants.RIGHT);
 			}
 			{
-				textField_7 = new JTextField();
-				textField_7.setBounds(225, 222, 243, 18);
-				panel.add(textField_7);
-				textField_7.setColumns(10);
+				textFieldBalance = new JTextField();
+				textFieldBalance.setBackground(Color.LIGHT_GRAY);
+				textFieldBalance.setBounds(225, 222, 243, 18);
+				panel.add(textFieldBalance);
+				textFieldBalance.setColumns(10);
 			}
 			{
 				JLabel lblAmtWith = new JLabel("Amount Withdrawn :");
@@ -109,10 +122,10 @@ public class Withdrawal extends JDialog {
 				lblAmtWith.setHorizontalAlignment(SwingConstants.RIGHT);
 			}
 			{
-				textField_4 = new JTextField();
-				textField_4.setBounds(225, 250, 243, 18);
-				panel.add(textField_4);
-				textField_4.setColumns(10);
+				textFieldWithdraw = new JTextField();
+				textFieldWithdraw.setBounds(225, 250, 243, 18);
+				panel.add(textFieldWithdraw);
+				textFieldWithdraw.setColumns(10);
 			}
 			{
 				JLabel lblAuthID = new JLabel("Authorized Staff ID :");
@@ -121,16 +134,28 @@ public class Withdrawal extends JDialog {
 				lblAuthID.setHorizontalAlignment(SwingConstants.RIGHT);
 			}
 			{
-				textField_5 = new JTextField();
-				textField_5.setBounds(225, 275, 243, 18);
-				panel.add(textField_5);
-				textField_5.setColumns(10);
+				textFieldAuthStaff = new JTextField();
+				textFieldAuthStaff.setBounds(225, 275, 243, 18);
+				panel.add(textFieldAuthStaff);
+				textFieldAuthStaff.setColumns(10);
 			}
 			
 			JPanel panel_1 = new JPanel();
 			panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 			panel_1.setBounds(0, 144, 631, 173);
 			panel.add(panel_1);
+			panel_1.setLayout(null);
+			
+			JLabel labelLastName = new JLabel("Last Name :");
+			labelLastName.setHorizontalAlignment(SwingConstants.RIGHT);
+			labelLastName.setBounds(306, 24, 75, 15);
+			panel_1.add(labelLastName);
+			
+			textFieldLastName = new JTextField();
+			textFieldLastName.setColumns(10);
+			textFieldLastName.setBackground(Color.LIGHT_GRAY);
+			textFieldLastName.setBounds(393, 22, 75, 18);
+			panel_1.add(textFieldLastName);
 			
 			JPanel panel_2 = new JPanel();
 			panel_2.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -143,12 +168,35 @@ public class Withdrawal extends JDialog {
 			lblAccountNumber.setBounds(12, 24, 134, 15);
 			panel_2.add(lblAccountNumber);
 			
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(158, 22, 243, 18);
-			panel_2.add(textField_2);
+			textFieldAcntNum = new JTextField();
+			textFieldAcntNum.setColumns(10);
+			textFieldAcntNum.setBounds(158, 22, 243, 18);
+			panel_2.add(textFieldAcntNum);
 			
 			JButton btnCheck = new JButton("Check");
+			btnCheck.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try{
+						String query="select * from CustomerInfo where AccountNumber=? ";
+						PreparedStatement pst=connection.prepareStatement(query);
+						pst.setString(1, textFieldAcntNum.getText());
+						ResultSet rs=pst.executeQuery();
+						
+						while(rs.next())
+						{
+							textFieldFirstName.setText(rs.getString("Name"));
+							textFieldLastName.setText(rs.getString("Surname"));
+							textFieldAcntNum1.setText(rs.getString("AccountNumber"));
+							textFieldBalance.setText(rs.getString("Balance"));
+							TempBalance = rs.getDouble("Balance");
+							
+						}
+						pst.close();
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			});
 			btnCheck.setBounds(158, 50, 90, 25);
 			panel_2.add(btnCheck);
 			
@@ -181,12 +229,40 @@ public class Withdrawal extends JDialog {
 			panel.setLayout(null);
 			{
 				JButton btnWithDraw = new JButton("Withdraw");
+				btnWithDraw.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+							try {
+							TempWithdraw = Double.parseDouble(textFieldWithdraw.getText());
+							
+							TempBalance -= TempWithdraw;
+							System.out.println(TempWithdraw);
+							System.out.println(TempBalance);
+							
+							
+						
+							String query="Update CustomerInfo set Balance='"+TempBalance+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   ";
+							PreparedStatement pst=connection.prepareStatement(query);
+							pst.execute();
+							JOptionPane.showMessageDialog(null, "Data Saved");
+								
+							pst.close();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}		
+						
+					}
+				});
 				btnWithDraw.setActionCommand("OK");
 				btnWithDraw.setBounds(159, 10, 90, 23);
 				panel.add(btnWithDraw);
 			}
 			{
 				JButton button = new JButton("Cancel");
+				button.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				button.setActionCommand("Cancel");
 				button.setBounds(363, 10, 90, 23);
 				panel.add(button);
@@ -195,8 +271,13 @@ public class Withdrawal extends JDialog {
 			JButton btnNewButton_1 = new JButton("Clear");
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					
+					textFieldAcntNum.setText("");
+					textFieldAcntNum1.setText("");
+					textFieldFirstName.setText("");
+					textFieldLastName.setText("");
+					textFieldBalance.setText("");
+					textFieldWithdraw.setText("");
+					textFieldAuthStaff.setText("");
 				}
 			});
 			btnNewButton_1.setBounds(261, 10, 90, 23);

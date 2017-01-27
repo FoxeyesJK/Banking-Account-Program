@@ -30,6 +30,7 @@ import java.sql.*;
 public class Registered_Customers extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	
 
 
 	/**
@@ -45,18 +46,17 @@ public class Registered_Customers extends JDialog {
 		}
 	}
 	Connection connection = null;
-	private JTable table;
 	private final JLabel lblCover = new JLabel("");
+	private JTable table;
 	/**
 	 * Create the dialog.
 	 */
 	public void refreshTable()
 	{
 		try {
-			String query="select EID,Name,Surname,UserName,Password,DOB,Email,Mobile,Address from CustomerInfo";
+			String query="select AccountNumber,Name,Surname,UserName,Password,DOB,Email,Mobile,Address from CustomerInfo";
 			PreparedStatement pst=connection.prepareStatement(query);
 			ResultSet rs=pst.executeQuery();
-			table.setModel(DbUtils.resultSetToTableModel(rs));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,7 +88,7 @@ public class Registered_Customers extends JDialog {
 			panel.setLayout(null);
 			{
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(12, 10, 607, 297);
+				scrollPane.setBounds(12, 10, 607, 245);
 				panel.add(scrollPane);
 				{
 					table = new JTable();
@@ -114,7 +114,7 @@ public class Registered_Customers extends JDialog {
 				btnPrint.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
-							String query="select * from CustomerInfo";
+							String query="select rowid,AccountNumber, Name, UserName, Password, DOB, Email, Mobile, Address, Balance, AccountType, Sex from CustomerInfo";
 						PreparedStatement pst = connection.prepareStatement(query);
 						ResultSet rs=pst.executeQuery();
 						table.setModel(DbUtils.resultSetToTableModel(rs));;
@@ -131,6 +131,11 @@ public class Registered_Customers extends JDialog {
 			}
 			{
 				JButton button = new JButton("Cancel");
+				button.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				button.setActionCommand("Cancel");
 				button.setBounds(363, 10, 90, 23);
 				panel.add(button);

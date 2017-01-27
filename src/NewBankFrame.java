@@ -128,6 +128,18 @@ public class NewBankFrame extends JFrame {
 		panel.add(btnWithdraw);
 		
 		JButton btnRegisterCustomers = new JButton("Register Customers");
+		btnRegisterCustomers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					Registered_Customers RegCus=new Registered_Customers();
+					RegCus.setVisible(true);
+					
+				}catch(Exception e)
+				{
+					JOptionPane.showMessageDialog(null, e);
+				}
+			}
+		});
 		btnRegisterCustomers.setBounds(25, 240, 150, 30);
 		panel.add(btnRegisterCustomers);
 		
