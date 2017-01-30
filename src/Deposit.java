@@ -241,12 +241,28 @@ public class Deposit extends JDialog {
 				btnDeposit.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
-							
 							TempDeposited = Double.parseDouble(textFieldDeposited.getText());
-							
 							TempBalance += TempDeposited;
-							System.out.println(TempDeposited);
-							System.out.println(TempBalance);
+							
+							String query1="select * from CustomerInfo where AccountNumber=? ";
+							PreparedStatement pst1=connection.prepareStatement(query1);
+							pst1.setString(1, textFieldAcntNum.getText());
+							ResultSet rs1=pst1.executeQuery();
+							
+							//while(rs1.next())
+							//{
+					
+								if(rs1.getString("Balance") == null)
+								{
+									String query3="insert into CusBal (AccountNumber,first,second) values (?,?,?)";
+									PreparedStatement pst3=connection.prepareStatement(query3);
+								
+								pst3.setString(1, textFieldAcntNum.getText());;
+								pst3.setDouble(2, Double.parseDouble(textFieldDeposited.getText()));
+								pst3.execute();
+								}		
+							//}
+
 							
 							
 						

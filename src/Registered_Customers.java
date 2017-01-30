@@ -57,6 +57,8 @@ public class Registered_Customers extends JDialog {
 			String query="select AccountNumber,Name,Surname,UserName,Password,DOB,Email,Mobile,Address from CustomerInfo";
 			PreparedStatement pst=connection.prepareStatement(query);
 			ResultSet rs=pst.executeQuery();
+			rs.close();
+			pst.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,6 +120,8 @@ public class Registered_Customers extends JDialog {
 						PreparedStatement pst = connection.prepareStatement(query);
 						ResultSet rs=pst.executeQuery();
 						table.setModel(DbUtils.resultSetToTableModel(rs));;
+						pst.close();
+						rs.close();
 						} catch (Exception e) {
 					
 							e.printStackTrace();
