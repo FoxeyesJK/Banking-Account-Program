@@ -249,23 +249,49 @@ public class Deposit extends JDialog {
 							pst1.setString(1, textFieldAcntNum.getText());
 							ResultSet rs1=pst1.executeQuery();
 							
-							//while(rs1.next())
-							//{
-					
+							String query5="select * from CusBal where AccountNumber=? ";
+							PreparedStatement pst5=connection.prepareStatement(query5);
+							pst5.setString(1, textFieldAcntNum.getText());
+							ResultSet rs5=pst5.executeQuery();
+														
+							//while(rs1.next(
+							
+							String query3="insert into CusBal (AccountNumber,First,Second) values (?,?,?)";
+							
 								if(rs1.getString("Balance") == null)
 								{
-									String query3="insert into CusBal (AccountNumber,first,second) values (?,?,?)";
 									PreparedStatement pst3=connection.prepareStatement(query3);
+									pst3.setString(1, textFieldAcntNum.getText());;
+									pst3.setDouble(2, Double.parseDouble(textFieldDeposited.getText()));
+									pst3.execute();
+									pst3.close();
+								}else
+								{
+									int column_index;
+									for(column_index=2;column_index<11;column_index++){
+										if(rs5.getString(column_index)==null)
+										{
+										//System.out.print(column_index);
+										break;
+										}
+									}
+									switch(column_index)
+									{
+									case 3: query3="Update CusBal set Second='"+TempDeposited+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 4: query3="Update CusBal set Third='"+TempDeposited+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 5: query3="Update CusBal set Fourth='"+TempDeposited+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 6: query3="Update CusBal set Fifth='"+TempDeposited+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 7: query3="Update CusBal set Sixth='"+TempDeposited+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 8: query3="Update CusBal set Seventh='"+TempDeposited+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									}
+									PreparedStatement pst3=connection.prepareStatement(query3);
+									pst3.execute();
+									pst3.close();
 								
-								pst3.setString(1, textFieldAcntNum.getText());;
-								pst3.setDouble(2, Double.parseDouble(textFieldDeposited.getText()));
-								pst3.execute();
-								}		
-							//}
-
-							
-							
-						
+								}
+								
+			
+		
 							String query="Update CustomerInfo set Balance='"+TempBalance+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   ";
 							PreparedStatement pst=connection.prepareStatement(query);
 							pst.execute();
