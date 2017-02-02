@@ -283,6 +283,7 @@ public class Deposit extends JDialog {
 									case 6: query3="Update CusBal set Fifth='"+TempDeposited+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
 									case 7: query3="Update CusBal set Sixth='"+TempDeposited+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
 									case 8: query3="Update CusBal set Seventh='"+TempDeposited+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									default : System.out.println("No more transactions available.");
 									}
 									PreparedStatement pst3=connection.prepareStatement(query3);
 									pst3.execute();
@@ -298,6 +299,8 @@ public class Deposit extends JDialog {
 							JOptionPane.showMessageDialog(null, "Data Saved");
 								
 							pst.close();
+							pst5.close();
+							pst1.close();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}		

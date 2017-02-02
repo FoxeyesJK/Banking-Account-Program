@@ -77,7 +77,7 @@ public class Login {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{ 
-					String query= "select * from CustomerInfo where username=? and password=?  ";
+					String query= "select * from EmployeeInfo where username=? and password=?  ";
 					//pass the query can be either upper or lowercase
 					PreparedStatement pst=connection.prepareStatement(query);
 					pst.setString(1, textFieldUN.getText() );

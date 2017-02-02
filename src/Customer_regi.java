@@ -135,7 +135,7 @@ public class Customer_regi extends JDialog {
 					}
 				}
 			});
-			comboBoxAccountType.setModel(new DefaultComboBoxModel(new String[] {"Choose Account Type", "Current Account", "Savings Account"}));
+			comboBoxAccountType.setModel(new DefaultComboBoxModel(new String[] {"Choose Account Type", "Checking Account", "Saving Account"}));
 			comboBoxAccountType.setBounds(125, 245, 243, 21);
 			panel.add(comboBoxAccountType);
 			{

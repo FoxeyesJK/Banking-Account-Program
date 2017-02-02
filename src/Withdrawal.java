@@ -197,6 +197,7 @@ public class Withdrawal extends JDialog {
 					}
 				}
 			});
+
 			btnCheck.setBounds(158, 50, 90, 25);
 			panel_2.add(btnCheck);
 			
@@ -233,13 +234,58 @@ public class Withdrawal extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 							try {
 							TempWithdraw = Double.parseDouble(textFieldWithdraw.getText());
+							TempWithdraw = 0 - TempWithdraw;
+							TempBalance += TempWithdraw;
 							
-							TempBalance -= TempWithdraw;
-							System.out.println(TempWithdraw);
-							System.out.println(TempBalance);
+							String query1="select * from CustomerInfo where AccountNumber=? ";
+							PreparedStatement pst1=connection.prepareStatement(query1);
+							pst1.setString(1, textFieldAcntNum.getText());
+							ResultSet rs1=pst1.executeQuery();
 							
+							String query5="select * from CusBal where AccountNumber=? ";
+							PreparedStatement pst5=connection.prepareStatement(query5);
+							pst5.setString(1, textFieldAcntNum.getText());
+							ResultSet rs5=pst5.executeQuery();
+														
+							//while(rs1.next(
 							
-						
+							String query3="insert into CusBal (AccountNumber,First,Second) values (?,?,?)";
+							
+								if(rs1.getString("Balance") == null)
+								{
+									PreparedStatement pst3=connection.prepareStatement(query3);
+									pst3.setString(1, textFieldAcntNum.getText());;
+									pst3.setDouble(2, Double.parseDouble(textFieldWithdraw.getText()));
+									pst3.execute();
+									pst3.close();
+								}else
+								{
+									int column_index;
+									for(column_index=2;column_index<11;column_index++){
+										if(rs5.getString(column_index)==null)
+										{
+										//System.out.print(column_index);
+										break;
+										}
+									}
+									switch(column_index)
+									{
+									case 3: query3="Update CusBal set Second='"+TempWithdraw+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 4: query3="Update CusBal set Third='"+TempWithdraw+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 5: query3="Update CusBal set Fourth='"+TempWithdraw+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 6: query3="Update CusBal set Fifth='"+TempWithdraw+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 7: query3="Update CusBal set Sixth='"+TempWithdraw+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									case 8: query3="Update CusBal set Seventh='"+TempWithdraw+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   "; break;
+									default : System.out.println("No more transactions available.");
+									}
+									PreparedStatement pst3=connection.prepareStatement(query3);
+									pst3.execute();
+									pst5.close();
+									pst1.close();
+									pst3.close();
+								
+								}
+			
 							String query="Update CustomerInfo set Balance='"+TempBalance+"'  where AccountNumber='" + textFieldAcntNum.getText()+"'   ";
 							PreparedStatement pst=connection.prepareStatement(query);
 							pst.execute();
@@ -249,9 +295,12 @@ public class Withdrawal extends JDialog {
 							} catch (Exception e) {
 								e.printStackTrace();
 							}		
+							
 						
+							
 					}
 				});
+			
 				btnWithDraw.setActionCommand("OK");
 				btnWithDraw.setBounds(159, 10, 90, 23);
 				panel.add(btnWithDraw);

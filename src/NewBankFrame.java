@@ -148,24 +148,24 @@ public class NewBankFrame extends JFrame {
 		lblHistory.setBounds(63, 215, 87, 15);
 		panel.add(lblHistory);
 		
-		JButton btnWithdrawDetials = new JButton("Withdraw Details");
-		btnWithdrawDetials.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnTransactionDetails = new JButton("Transaction Details");
+		btnTransactionDetails.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					TransactionDetails TraDeta=new TransactionDetails();
+					TraDeta.setVisible(true);
+					
+				}catch(Exception e)
+				{
+					JOptionPane.showMessageDialog(null, e);
+				}
 			}
 		});
-		btnWithdrawDetials.setBounds(25, 280, 150, 30);
-		panel.add(btnWithdrawDetials);
-		
-		JButton btnDepositDetails = new JButton("Deposit Details");
-		btnDepositDetails.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnDepositDetails.setBounds(25, 320, 150, 30);
-		panel.add(btnDepositDetails);
+		btnTransactionDetails.setBounds(25, 280, 150, 30);
+		panel.add(btnTransactionDetails);
 		
 		JButton btnLoginDetails = new JButton("Login Details");
-		btnLoginDetails.setBounds(25, 360, 150, 30);
+		btnLoginDetails.setBounds(25, 320, 150, 30);
 		panel.add(btnLoginDetails);
 		
 		JLabel labelBack = new JLabel("");
