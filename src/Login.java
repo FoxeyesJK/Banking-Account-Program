@@ -31,16 +31,15 @@ public class Login {
 	Connection connection=null;
 	private JTextField textFieldUN;
 	private JPasswordField textpasswordfield;
-	
+	//connecting data
 	/**
 	 * Create the application.
 	 */
 	public Login() {
 		initialize();
 		connection=sqliteConnection.dbConnector();
-		
 	}
-//sex
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -48,7 +47,7 @@ public class Login {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.getContentPane().setForeground(Color.WHITE);
-		frame.setBounds(100, 100, 923, 460);
+		frame.setBounds(100, 100, 900, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -94,8 +93,8 @@ public class Login {
 						JOptionPane.showMessageDialog(null, "Username and password is correct");
 						//second Jframe
 						frame.dispose();
-						EmployeeInfo emplInfo=new EmployeeInfo();
-						emplInfo.setVisible(true);
+						NewBankFrame newframe=new NewBankFrame();
+						newframe.setVisible(true);
 					}else if(count>1)
 					{
 						JOptionPane.showMessageDialog(null, "Duplicate Username and password");
@@ -125,7 +124,7 @@ public class Login {
 		Image img1 = new ImageIcon(this.getClass().getResource("/JKBANK LOGO.png")).getImage();
 		label.setIcon(new ImageIcon(img1));
 		
-		label.setBounds(98, 10, 149, 62);
+		label.setBounds(96, 39, 149, 62);
 		frame.getContentPane().add(label);
 		
 		JLabel lblSignIn = new JLabel("Sign in");
@@ -137,7 +136,7 @@ public class Login {
 		JLabel labelCover = new JLabel("");
 		Image img2 = new ImageIcon(this.getClass().getResource("/Cover2.jpg")).getImage();
 		labelCover.setIcon(new ImageIcon(img2));
-		labelCover.setBounds(30, 70, 857, 331);
+		labelCover.setBounds(12, 112, 907, 331);
 		frame.getContentPane().add(labelCover);
 	}
 }

@@ -1,17 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.proteanit.sql.DbUtils;
 
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -21,9 +16,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Component;
 
 public class EmployeeInfo extends JFrame {
-
+//Second_page modification 
 	private JPanel contentPane;
 	private JTable table;
 	private JComboBox comboBoxName;
@@ -63,7 +61,6 @@ public class EmployeeInfo extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void fillComboBox()
@@ -111,53 +108,9 @@ public class EmployeeInfo extends JFrame {
 	public EmployeeInfo() {
 		connection=sqliteConnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 613, 369);
-		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JMenu mnNewMenu = new JMenu("File");
-		menuBar.add(mnNewMenu);
-		
-		JMenu mnNewMenu_1 = new JMenu("New");
-		mnNewMenu_1.setIcon(new ImageIcon("D:\\eclipse\\Ok-icon.png"));
-		mnNewMenu.add(mnNewMenu_1);
-		
-		JMenuItem mntmJavaProject = new JMenuItem("Java Project");
-		mnNewMenu_1.add(mntmJavaProject);
-		
-		JMenuItem mntmProject = new JMenuItem("Project");
-		mnNewMenu_1.add(mntmProject);
-		
-		JMenu mnOpenFile = new JMenu("Open File");
-		mnNewMenu.add(mnOpenFile);
-		
-		JMenu mnClose = new JMenu("Close");
-		mnNewMenu.add(mnClose);
-		
-		JMenu mnCloseAll = new JMenu("Close All");
-		mnNewMenu.add(mnCloseAll);
-		
-		JMenu mnExit = new JMenu("Exit");
-		mnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(JFrame.EXIT_ON_CLOSE);
-			}
-		});
-		mnNewMenu.add(mnExit);
-		
-		JMenu mnEdit = new JMenu("Edit");
-		menuBar.add(mnEdit);
-		
-		JRadioButtonMenuItem rdbtnmntmRadioButton = new JRadioButtonMenuItem("Radio Button");
-		mnEdit.add(rdbtnmntmRadioButton);
-		
-		JCheckBoxMenuItem chckbxmntmCheckbox = new JCheckBoxMenuItem("Checkbox");
-		mnEdit.add(chckbxmntmCheckbox);
-		
-		JMenu mnSource = new JMenu("Source");
-		menuBar.add(mnSource);
+		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -178,11 +131,11 @@ public class EmployeeInfo extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(12, 263, 97, 23);
+		btnNewButton.setBounds(167, 420, 97, 23);
 		contentPane.add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(238, 79, 347, 186);
+		scrollPane.setBounds(393, 236, 347, 186);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -218,22 +171,22 @@ public class EmployeeInfo extends JFrame {
 		
 		JLabel lblEd = new JLabel("EID");
 		lblEd.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblEd.setBounds(12, 56, 57, 23);
+		lblEd.setBounds(167, 213, 57, 23);
 		contentPane.add(lblEd);
 		
 		JLabel lblNewLabel = new JLabel("Name");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(12, 81, 57, 23);
+		lblNewLabel.setBounds(167, 238, 57, 23);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblSurname = new JLabel("Surname");
 		lblSurname.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblSurname.setBounds(12, 106, 80, 23);
+		lblSurname.setBounds(167, 263, 80, 23);
 		contentPane.add(lblSurname);
 		
 		JLabel lblAge = new JLabel("Age");
 		lblAge.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblAge.setBounds(12, 131, 57, 23);
+		lblAge.setBounds(167, 288, 57, 23);
 		contentPane.add(lblAge);
 		
 		JButton btnNewButton_1 = new JButton("Save");
@@ -261,26 +214,26 @@ public class EmployeeInfo extends JFrame {
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton_1.setBounds(12, 164, 97, 23);
+		btnNewButton_1.setBounds(167, 321, 97, 23);
 		contentPane.add(btnNewButton_1);
 		
 		textFieldEID = new JTextField();
-		textFieldEID.setBounds(97, 58, 116, 21);
+		textFieldEID.setBounds(252, 215, 116, 21);
 		contentPane.add(textFieldEID);
 		textFieldEID.setColumns(10);
 		
 		textFieldName = new JTextField();
-		textFieldName.setBounds(97, 83, 116, 21);
+		textFieldName.setBounds(252, 240, 116, 21);
 		contentPane.add(textFieldName);
 		textFieldName.setColumns(10);
 		
 		textFieldSurname = new JTextField();
-		textFieldSurname.setBounds(97, 108, 116, 21);
+		textFieldSurname.setBounds(252, 265, 116, 21);
 		contentPane.add(textFieldSurname);
 		textFieldSurname.setColumns(10);
 		
 		textFieldAge = new JTextField();
-		textFieldAge.setBounds(97, 133, 116, 21);
+		textFieldAge.setBounds(252, 290, 116, 21);
 		contentPane.add(textFieldAge);
 		textFieldAge.setColumns(10);
 		
@@ -305,7 +258,7 @@ public class EmployeeInfo extends JFrame {
 			}
 		});
 		btnUpdate.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnUpdate.setBounds(12, 197, 97, 23);
+		btnUpdate.setBounds(167, 354, 97, 23);
 		contentPane.add(btnUpdate);
 		
 		JButton btnDelete = new JButton("Delete");
@@ -331,7 +284,7 @@ public class EmployeeInfo extends JFrame {
 			}
 		});
 		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnDelete.setBounds(12, 230, 97, 23);
+		btnDelete.setBounds(167, 387, 97, 23);
 		contentPane.add(btnDelete);
 		
 		comboBoxName = new JComboBox();
@@ -360,11 +313,11 @@ public class EmployeeInfo extends JFrame {
 			}
 		});
 		comboBoxName.setFont(new Font("Tahoma", Font.BOLD, 18));
-		comboBoxName.setBounds(12, 25, 116, 21);
+		comboBoxName.setBounds(167, 182, 116, 21);
 		contentPane.add(comboBoxName);
 		
 		listName = new JList();
-		listName.setBounds(121, 164, 92, 135);
+		listName.setBounds(276, 321, 92, 135);
 		contentPane.add(listName);
 		
 		textFieldSearch = new JTextField();
@@ -388,15 +341,83 @@ public class EmployeeInfo extends JFrame {
 					}
 			}
 		});
-		textFieldSearch.setBounds(389, 27, 146, 42);
+		textFieldSearch.setBounds(544, 184, 146, 42);
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
 		
 		comboBoxSelect = new JComboBox();
 		comboBoxSelect.setModel(new DefaultComboBoxModel(new String[] {"EID", "Name", "Surname", "Age"}));
 		comboBoxSelect.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBoxSelect.setBounds(238, 27, 139, 21);
+		comboBoxSelect.setBounds(393, 184, 139, 21);
 		contentPane.add(comboBoxSelect);
+		
+		JLabel labelLogo = new JLabel("");
+		Image img = new ImageIcon(this.getClass().getResource("JKBANK LOGO.png")).getImage();
+		labelLogo.setIcon(new ImageIcon(img));
+		labelLogo.setBounds(375, 10, 139, 61);
+		contentPane.add(labelLogo);
+		
+		JMenuBar menuBar_1 = new JMenuBar();
+		menuBar_1.setForeground(Color.WHITE);
+		menuBar_1.setBackground(new Color(135, 206, 250));
+		menuBar_1.setBounds(0, 69, 884, 42);
+		contentPane.add(menuBar_1);
+		
+		JMenu mnPersonal = new JMenu("              Account Manage");
+		mnPersonal.setHorizontalTextPosition(SwingConstants.LEADING);
+		mnPersonal.setPreferredSize(new Dimension(225, 22));
+		mnPersonal.setForeground(Color.WHITE);
+		mnPersonal.setBackground(new Color(135, 206, 250));
+		mnPersonal.setFont(new Font("Tahoma", Font.BOLD, 16));
+		menuBar_1.add(mnPersonal);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("                        My Account");
+		mntmNewMenuItem.setBackground(new Color(135, 206, 250));
+		mntmNewMenuItem.setForeground(Color.WHITE);
+		mntmNewMenuItem.setPreferredSize(new Dimension(218, 22));
+		mnPersonal.add(mntmNewMenuItem);
+		
+		JSeparator separator = new JSeparator();
+		mnPersonal.add(separator);
+		
+		JMenuItem mntmPaymenttransfer = new JMenuItem("                   Payment/Transfer");
+		mntmPaymenttransfer.setPreferredSize(new Dimension(218, 22));
+		mntmPaymenttransfer.setForeground(Color.WHITE);
+		mntmPaymenttransfer.setBackground(new Color(135, 206, 250));
+		mnPersonal.add(mntmPaymenttransfer);
+		
+		JSeparator separator_1 = new JSeparator();
+		mnPersonal.add(separator_1);
+		
+		JMenuItem mntmSetting = new JMenuItem("                            Setting");
+		mntmSetting.setPreferredSize(new Dimension(218, 22));
+		mntmSetting.setBackground(new Color(135, 206, 250));
+		mntmSetting.setForeground(Color.WHITE);
+		mnPersonal.add(mntmSetting);
+		
+		JMenu mnCorporate = new JMenu("              Balance Manage");
+		mnCorporate.setPreferredSize(new Dimension(225, 22));
+		mnCorporate.setHorizontalTextPosition(SwingConstants.LEADING);
+		mnCorporate.setForeground(Color.WHITE);
+		mnCorporate.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mnCorporate.setBackground(new Color(135, 206, 250));
+		menuBar_1.add(mnCorporate);
+		
+		JMenu mnCustomerCenter = new JMenu("       Empolyee Manage");
+		mnCustomerCenter.setPreferredSize(new Dimension(225, 22));
+		mnCustomerCenter.setHorizontalTextPosition(SwingConstants.LEADING);
+		mnCustomerCenter.setForeground(Color.WHITE);
+		mnCustomerCenter.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mnCustomerCenter.setBackground(new Color(135, 206, 250));
+		menuBar_1.add(mnCustomerCenter);
+		
+		JMenu mnAboutUs = new JMenu("           About Us");
+		mnAboutUs.setPreferredSize(new Dimension(225, 22));
+		mnAboutUs.setHorizontalTextPosition(SwingConstants.LEADING);
+		mnAboutUs.setForeground(Color.WHITE);
+		mnAboutUs.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mnAboutUs.setBackground(new Color(135, 206, 250));
+		menuBar_1.add(mnAboutUs);
 		
 		refreshTable();
 		fillComboBox();
